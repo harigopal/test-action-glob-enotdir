@@ -10,6 +10,8 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     steps:
+      - name: Check out this repo
+        uses: actions/checkout@v2
       - name: Look for some files
         id: look-for-some-files
         uses: actions/github-script@v6
