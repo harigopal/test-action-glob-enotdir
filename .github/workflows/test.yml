@@ -25,5 +25,5 @@ jobs:
             }));
 
             return missingPaths.flat().map(path => "- " + path).join("\n");
-        - name: Print the result
-          run: echo "${{ steps.look-for-some-files.outputs.result }}"
+      - name: Print the result
+        run: echo "${{ steps.look-for-some-files.outputs.result }}"
