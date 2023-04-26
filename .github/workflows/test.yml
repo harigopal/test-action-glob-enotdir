@@ -18,7 +18,7 @@ jobs:
         with:
           result-encoding: string
           script: |
-            const patterns = ["is-a-folder/*", "not-a-folder/*"]
+            const patterns = ["is-a-folder/*", "not-a-folder/sub-folder/some_file.md"]
 
             const missingPaths = await Promise.all(patterns.map(async (pattern) => {
               const globber = await glob.create(pattern);
