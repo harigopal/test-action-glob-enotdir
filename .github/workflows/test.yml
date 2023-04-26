@@ -1,0 +1,29 @@
+name: Testing ENOTDIR generation
+
+on:
+  push:
+    branches: ["*"]
+  pull_request:
+    branches: ["*"]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Look for some files
+        id: look-for-some-files
+        uses: actions/github-script@v6
+        with:
+          result-encoding: string
+          script: |
+            const patterns = ["is-a-folder/*", "not-a-folder/*"]
+
+            const missingPaths = await Promise.all(patterns.map(async (pattern) => {
+              const globber = await glob.create(pattern);
+              const files = await globber.glob();
+              return files.length === 0 ? [pattern] : []
+            }));
+
+            return missingPaths.flat().map(path => "- " + path).join("\n");
+        - name: Print the result
+          run: echo "${{ steps.look-for-some-files.outputs.result }}"
